@@ -10,44 +10,41 @@
     using System.Threading.Tasks;
 
     [Route("[controller]")]
-	[ApiController]
-	public class UserController : ControllerBase
-	{
+    [ApiController]
+    public class UserController : ControllerBase
+    {
         private readonly ApplicationDbContext dbContext;
         private readonly UserManager<ApplicationUser> userManager;
 
-        public UserController(ApplicationDbContext dbContext,UserManager<ApplicationUser> userManager)
+        public UserController(ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager)
         {
             this.dbContext = dbContext;
             this.userManager = userManager;
         }
 
-		[HttpGet]
-		public ActionResult GetId()
+        [HttpGet]
+        public ActionResult GetId()
         {
-			return Ok(new UserRoleList() { Name = User.Identity.Name });
+            return Ok(new UserRoleList() { Name = User.Identity.Name });
         }
 
 
-		[HttpGet("roles/{id}")]
-		public async Task<List<UserRoleList>> GetRoles(string id)
-		{
-			List<UserRoleList> userRoleList = new();
+        [HttpGet("roles/{id}")]
+        public async Task<List<string>> GetRoles(string id)
+        {
+            List<string> roles = new();
 
-			if(id != null)
+            if (id != null)
             {
-				var user = dbContext.Users.FirstOrDefault(x => x.Id == id);
-				var role = await userManager.GetRolesAsync(user);
+                var user = dbContext.Users.FirstOrDefault(x => x.Id == id);
+                var rolesList = await userManager.GetRolesAsync(user);
 
-                foreach (var item in role)
-                {
-                    userRoleList.Add(new UserRoleList() { Name = item });
-                }
+                roles.AddRange(rolesList);
 
-				return userRoleList;
-			}
+                return roles;
+            }
 
-            return userRoleList;
+            return roles;
         }
-	}
+    }
 }

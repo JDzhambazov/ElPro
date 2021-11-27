@@ -15,12 +15,12 @@ Welcome to your new app.
 <button @onclick="GetRoles">Roles</button>
 @foreach (var role in RoleName)
 {
-	<p>@role.Name</p>
+	<p>@role</p>
 }
 
 
 @code {
-	private List<UserRoleList> RoleName = new();
+	private List<string> RoleName = new();
 	//private string userId;
 
 	private async Task<string> GetClaimsPrincipalData()
@@ -40,6 +40,6 @@ Welcome to your new app.
 	private async Task GetRoles()
 	{
 		var userId = await GetClaimsPrincipalData();
-		RoleName = await Http.GetFromJsonAsync<List<UserRoleList>>($"user/roles/{userId}");
+		RoleName = await Http.GetFromJsonAsync<List<string>>($"user/roles/{userId}");
 	}
 }
