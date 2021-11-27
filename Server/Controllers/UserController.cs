@@ -1,20 +1,25 @@
 ﻿namespace ElPro.Server.Controllers
 {
-	using System.Linq;
     using ElPro.Server.Data;
+    using ElPro.Server.Models;
     using ElPro.Shared;
-    using Microsoft.AspNetCore.Http;
-	using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
-	[Route("[controller]")]
+    [Route("[controller]")]
 	[ApiController]
 	public class UserController : ControllerBase
 	{
         private readonly ApplicationDbContext dbContext;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public UserController(ApplicationDbContext dbContext)
+        public UserController(ApplicationDbContext dbContext,UserManager<ApplicationUser> userManager)
         {
             this.dbContext = dbContext;
+            this.userManager = userManager;
         }
 
 		[HttpGet]
@@ -25,15 +30,24 @@
 
 
 		[HttpGet("roles/{id}")]
-		public ActionResult GetRoles(string id)
+		public async Task<List<UserRoleList>> GetRoles(string id)
 		{
+			List<UserRoleList> userRoleList = new();
+
 			if(id != null)
             {
-				var name = dbContext.Users.FirstOrDefault(x => x.Id == id).UserName;
-				return Ok(new UserRoleList() { Name = name });
+				var user = dbContext.Users.FirstOrDefault(x => x.Id == id);
+				var role = await userManager.GetRolesAsync(user);
+
+                foreach (var item in role)
+                {
+                    userRoleList.Add(new UserRoleList() { Name = item });
+                }
+
+				return userRoleList;
 			}
 
-			return NotFound("Not found");
-		}
+            return userRoleList;
+        }
 	}
 }
