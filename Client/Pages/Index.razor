@@ -1,7 +1,46 @@
 ﻿@page "/"
+@using ElPro.Shared;
+@using System.Security.Claims
+@using Microsoft.AspNetCore.Authorization
+
+@attribute [Authorize]
+
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+<hr />
+<button @onclick="GetRoles">Roles</button>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+<p>@RoleName.Name</p>
+<p>@userId</p>
+
+
+
+@code {
+	private UserRoleList RoleName = new();
+	private string userId;
+
+	private async Task<string> GetClaimsPrincipalData()
+	{
+		var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+
+		if (authState.User.Identity.IsAuthenticated)
+		{
+			return authState.User.FindFirst(c => c.Type == "sub")?.Value;
+		}
+		else
+		{
+			return String.Empty;
+		}
+	}
+
+	private async Task GetRoles()
+	{
+		userId = await GetClaimsPrincipalData();
+		//RoleName = await Http.GetFromJsonAsync<UserRoleList>($"user");
+		RoleName = await Http.GetFromJsonAsync<UserRoleList>($"user/roles/{userId}");
+	}
+}
