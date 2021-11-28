@@ -18,7 +18,7 @@ using ElPro.Server.Services;
 
 namespace ElPro.Server.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    [Authorize(Roles ="Admin")]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;

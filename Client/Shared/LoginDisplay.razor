@@ -4,8 +4,10 @@
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 
-<AuthorizeView>
+		<MainMenu></MainMenu>
+@*<AuthorizeView>
 	<Authorized>
+		<MainMenu></MainMenu>
 		<a href="authentication/register">Register</a>
 		<a href="authentication/profile">Hello, @context.User.Identity.Name!</a>
 		<button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
@@ -13,12 +15,12 @@
 	<NotAuthorized>
 		<a href="authentication/login">Log in</a>
 	</NotAuthorized>
-</AuthorizeView>
+</AuthorizeView>*@
 
 @code {
 	private async Task BeginSignOut(MouseEventArgs args)
 	{
-		
+
 		await SignOutManager.SetSignOutState();
 		Navigation.NavigateTo("authentication/logout");
 	}

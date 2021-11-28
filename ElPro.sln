@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31903.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElPro.Server", "Server\ElPro.Server.csproj", "{657E3712-7E29-4BE9-9EF6-F914364F94C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElPro.Server", "Server\ElPro.Server.csproj", "{657E3712-7E29-4BE9-9EF6-F914364F94C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElPro.Client", "Client\ElPro.Client.csproj", "{AB134115-1CBA-4041-A1C3-AFEF714C81CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElPro.Client", "Client\ElPro.Client.csproj", "{AB134115-1CBA-4041-A1C3-AFEF714C81CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElPro.Shared", "Shared\ElPro.Shared.csproj", "{CBD89DA1-D482-4EF4-98BB-EA50ABEAD092}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ElPro.Shared", "Shared\ElPro.Shared.csproj", "{CBD89DA1-D482-4EF4-98BB-EA50ABEAD092}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
